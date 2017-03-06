@@ -48,9 +48,13 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
      {
 		 return nullptr
 	 }
-     if (opponentsMove == nullptr)
-     {
+	 clock_t t;
+	 while ((((float)t)/CLOCKS_PER_SEC) <= msLeft)
+	 {
+         if (opponentsMove == nullptr)
+         {
 		 
+	     }
+         return nullptr;
 	 }
-     return nullptr;
 }
