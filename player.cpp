@@ -10,13 +10,14 @@ Player::Player(Side side) {
 	clock_t t;
 	while ((((float)t)/CLOCKS_PER_SEC) <= 30.0)
 	{
-    // Will be set to true in test_minimax.cpp.
-    testingMinimax = false;
-    /*
-    * TODO: Do any initialization you need to do here (setting up the board,
-    * precalculating things, etc.) However, remember that you will only have
-    * 30 seconds.
-    */
+        // Will be set to true in test_minimax.cpp.
+        testingMinimax = false;
+        Board b = Board();
+        /*
+         * TODO: Do any initialization you need to do here (setting up the board,
+         * precalculating things, etc.) However, remember that you will only have
+         * 30 seconds.
+         */
 	 }
 }
 
