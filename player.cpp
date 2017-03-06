@@ -1,4 +1,5 @@
 #include "player.hpp"
+#inlcude <time.h>
 
 /*
  * Constructor for the player; initialize everything here. The side your AI is
@@ -6,14 +7,17 @@
  * within 30 seconds.
  */
 Player::Player(Side side) {
+	clock_t t;
+	while ((((float)t)/CLOCKS_PER_SEC) <= 30.0)
+	{
     // Will be set to true in test_minimax.cpp.
     testingMinimax = false;
-    Board b = Board();
     /*
-     * TODO: Do any initialization you need to do here (setting up the board,
-     * precalculating things, etc.) However, remember that you will only have
-     * 30 seconds.
-     */
+    * TODO: Do any initialization you need to do here (setting up the board,
+    * precalculating things, etc.) However, remember that you will only have
+    * 30 seconds.
+    */
+	 }
 }
 
 /*
@@ -40,5 +44,17 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
      * TODO: Implement how moves your AI should play here. You should first
      * process the opponent's opponents move before calculating your own move
      */
-    return nullptr;
+     if (msLeft == -1)
+     {
+		 return nullptr
+	 }
+	 clock_t t;
+	 while ((((float)t)/CLOCKS_PER_SEC) <= msLeft)
+	 {
+         if (opponentsMove == nullptr)
+         {
+		 
+	     }
+         return nullptr;
+	 }
 }
