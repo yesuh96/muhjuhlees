@@ -19,6 +19,7 @@ public:
     Board b;
     Side s;
     Side os;
+    int weightarray[8][8];
 };
 
 

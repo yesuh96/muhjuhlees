@@ -67,20 +67,28 @@ bool Board::hasMoves(Side side) {
     return false;
 }
 
-int Board::score(int array[][], Side s){
+int Board::score(Side s){
 	int ourscore;
 	int theirscore;
+    int weightarray[8][8] = {{20,-5,5,5,5,5,-5,20},
+                            {-5,-5,2,2,2,2,-5,-5},
+                            {5,2,2,2,2,2,2,5},
+                            {5,2,2,2,2,2,2,5},
+                            {5,2,2,2,2,2,2,5},
+                            {5,2,2,2,2,2,2,5},
+                            {-5,-5,2,2,2,2,-5,-5},
+                            {20,-5,5,5,5,5,-5,20}};
     for (int i = 0; i < 8; i++)
     {
 		for (int k = 0; k < 8; k++)
 		{
-			if(b.get(s, i, k) && b.occupied(i, k))
+			if(this->get(s, i, k) && this->occupied(i, k))
 			{
-				ourscore += array[i][k];
+				ourscore += weightarray[i][k];
 			}
-			else if(b.occupied(i, k))
+			else if(this->occupied(i, k))
 			{
-				theirscore += array[i][k];
+				theirscore += weightarray[i][k];
 			}
 			else
 			{

@@ -23,15 +23,6 @@ Player::Player(Side side) {
             s = side;
             os = BLACK;
         }
-        
-        int weightarray[8][8] = {{20,-5,5,5,5,5,-5,20},
-                                 {-5,-5,2,2,2,2,-5,-5},
-                                 {5,2,2,2,2,2,2,5},
-                                 {5,2,2,2,2,2,2,5},
-                                 {5,2,2,2,2,2,2,5},
-                                 {5,2,2,2,2,2,2,5},
-                                 {-5,-5,2,2,2,2,-5,-5},
-                                 {20,-5,5,5,5,5,-5,20}};
     }
 }
 
@@ -59,7 +50,7 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
      * TODO: Implement how moves your AI should play here. You should first
      * process the opponent's opponents move before calculating your own move
      */
-    Board copy;
+    Board *copy;
     Move *m;
     int maxxpos;
     int maxypos;
@@ -68,127 +59,81 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
     {
         return nullptr;
     }
-    clock_t t;
-    while ((((float)t)/CLOCKS_PER_SEC) <= msLeft)
+    if (opponentsMove == nullptr)
     {
-        if (opponentsMove == nullptr)
+        if (!b.hasMoves(s))
         {
-             if (!b.hasMoves(s))
-             {
-				 return nullptr;
-			 }
-			 else
-			 {
-                 for (int i = 0; i < 8; i++)
-                 {
-					 for (int k = 0; k < 8; k++)
-					 {
-						 copy = b.copy();
-						 m->setX(i);
-						 m->setY(k);
-						 if(copy.checkMove(m, s))
-						 {
-							 copy.doMove(m, s);
-							 if(copy.score(weightarray, s) > maxMoveval)
-							 {
-								 maxMoveVal = copy.score(weightarray, s);
-								 maxxpos = i;
-								 maxypos = k;
-							 }
-							 else
-							 {
-								 continue;
-							 }
-						 }
-						 else
-						 {
-							 continue;
-						 }
-					 }
-				 }
-				  return Move(maxxpos, maxypos);
-			 }
+            return nullptr;
         }
         else
         {
-			b.doMove(opponentsMove, os);
-			for (int i = 0; i < 8; i++)
+            for (int i = 0; i < 8; i++)
             {
-				for (int k = 0; k < 8; k++)
-				{
-					copy = b.copy();
-					m->setX(i);
-					m->setY(k);
-					if(copy.checkMove(m, s))
-					{
-						copy.doMove(m, s);
-						if(copy.score(weightarray, s) > maxMoveval)
-						{
-							maxMoveVal = copy.score(weightarray, s);
-							maxxpos = i;
-							maxypos = k;
-						}
-						else
-						{
-							continue;
-						}
-					}
-					else
-					{
-						continue;
-					}
-				}
-			}
-			return Move(maxxpos, maxypos);
-		}
-        return nullptr;
-    }
-    
-    /*check more heavily weighted positions first, then do move if valid,
-     * for example, if corner position is available, do move for corner position
-     */
-     
-    /*
-    for (i=0;i<8;i++)
-    {
-        for (j=0; j<8;j++)
-        {
-            Move e->setX(i);
-            Move e->setY(j);
-            for (weightarray[i][j] == 4)
-            {
-                checkMove(e,s);
-                doMove(e,s);
+                for (int k = 0; k < 8; k++)
+                {
+                    copy = b.copy();
+                    m->setX(i);
+                    m->setY(k);
+                    if(copy->checkMove(m, s))
+                    {
+                        copy->doMove(m, s);
+                        if(copy->score(s) > maxMoveVal)
+                        {
+                            maxMoveVal = copy->score(s);
+                            maxxpos = i;
+                            maxypos = k;
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
             }
-                
-            }
-            for (weightarray[i][j]
-                e
-                
-                
-                
-                
-                b[i][j]
-                
-                int X = m->getX();
-                m->setX(
-    int Y = m->getY();
-                
-    if (b.hasMoves(s))
-    {
-        b.checkMove()
-        
-        b.doMove()
-        */
-         
-    if (b.countBlack()>b.countWhite())
-    {
-        /*"Black wins"*/      //I don't think this part is necessary
-                              //because we are only doing moves
+            Move * finalpos = new Move(maxxpos, maxypos);
+            b.doMove(finalpos, s);
+            return finalpos;
+        }
     }
     else
     {
-        /*"White wins"*/
+        b.doMove(opponentsMove, os);
+        for (int i = 0; i < 8; i++)
+        {
+            for (int k = 0; k < 8; k++)
+            {
+                copy = b.copy();
+                m->setX(i);
+                m->setY(k);
+                if(copy->checkMove(m, s))
+                {
+                    copy->doMove(m, s);
+                    if(copy->score(s) > maxMoveVal)
+                    {
+                        maxMoveVal = copy->score(s);
+                        maxxpos = i;
+                        maxypos = k;
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
+                else
+                {
+                    continue;
+                }
+            }
+        }
+        Move * finalpos = new Move(maxxpos, maxypos);
+        b.doMove(finalpos, s);
+        return finalpos;
     }
-     
+    return nullptr;
 }
+
+
