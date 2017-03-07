@@ -111,42 +111,35 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
         }
         else
         {
-			if (b.checkMove(opponentsMove, os))
-			{
-				b.doMove(opponentsMove, os);
-				for (int i = 0; i < 8; i++)
-                 {
-					 for (int k = 0; k < 8; k++)
-					 {
-						 copy = b.copy();
-						 m->setX(i);
-						 m->setY(k);
-						 if(copy.checkMove(m, s))
-						 {
-							 copy.doMove(m, s);
-							 if(copy.score(weightarray, s) > maxMoveval)
-							 {
-								 maxMoveVal = copy.score(weightarray, s);
-								 maxxpos = i;
-								 maxypos = k;
-							 }
-							 else
-							 {
-								 continue;
-							 }
-						 }
-						 else
-						 {
-							 continue;
-						 }
-					 }
-				 }
-				  return Move(maxxpos, maxypos);
+			b.doMove(opponentsMove, os);
+			for (int i = 0; i < 8; i++)
+            {
+				for (int k = 0; k < 8; k++)
+				{
+					copy = b.copy();
+					m->setX(i);
+					m->setY(k);
+					if(copy.checkMove(m, s))
+					{
+						copy.doMove(m, s);
+						if(copy.score(weightarray, s) > maxMoveval)
+						{
+							maxMoveVal = copy.score(weightarray, s);
+							maxxpos = i;
+							maxypos = k;
+						}
+						else
+						{
+							continue;
+						}
+					}
+					else
+					{
+						continue;
+					}
+				}
 			}
-			else
-			{
-				std::cerr<<"invalid opponent's move" << std::endl;
-			}
+			return Move(maxxpos, maxypos);
 		}
         return nullptr;
     }
