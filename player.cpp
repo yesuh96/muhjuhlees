@@ -7,22 +7,18 @@
  * within 30 seconds.
  */
 Player::Player(Side side) {
-	clock_t t;
-	while ((((float)t)/CLOCKS_PER_SEC) <= 30.0)
-	{
-        // Will be set to true in test_minimax.cpp.
-        testingMinimax = false;
-        b = Board();
-        if (side == BLACK)
-        {
-            s = side;
-            os = WHITE;
-        }
-        else
-        {
-            s = side;
-            os = BLACK;
-        }
+	// Will be set to true in test_minimax.cpp.
+    testingMinimax = false;
+    b = new Board();
+    if (side == BLACK)
+    {
+		s = side;
+        os = WHITE;
+    }
+    else
+    {
+		s = side;
+        os = BLACK;
     }
 }
 
@@ -51,17 +47,13 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
      * process the opponent's opponents move before calculating your own move
      */
     Board *copy;
-    Move *m;
+    Move *m = new Move(0, 0);
     int maxxpos;
     int maxypos;
     int maxMoveVal = -1000;
-    if (msLeft == -1)
-    {
-        return nullptr;
-    }
     if (opponentsMove == nullptr)
     {
-        if (!b.hasMoves(s))
+        if (!(b->hasMoves(s)))
         {
             return nullptr;
         }
@@ -71,7 +63,7 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
             {
                 for (int k = 0; k < 8; k++)
                 {
-                    copy = b.copy();
+                    copy = b->copy();
                     m->setX(i);
                     m->setY(k);
                     if(copy->checkMove(m, s))
@@ -83,30 +75,22 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
                             maxxpos = i;
                             maxypos = k;
                         }
-                        else
-                        {
-                            continue;
-                        }
-                    }
-                    else
-                    {
-                        continue;
                     }
                 }
             }
             Move * finalpos = new Move(maxxpos, maxypos);
-            b.doMove(finalpos, s);
+            b->doMove(finalpos, s);
             return finalpos;
         }
     }
     else
     {
-        b.doMove(opponentsMove, os);
+        b->doMove(opponentsMove, os);
         for (int i = 0; i < 8; i++)
         {
             for (int k = 0; k < 8; k++)
             {
-                copy = b.copy();
+                copy = b->copy();
                 m->setX(i);
                 m->setY(k);
                 if(copy->checkMove(m, s))
@@ -118,19 +102,11 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
                         maxxpos = i;
                         maxypos = k;
                     }
-                    else
-                    {
-                        continue;
-                    }
-                }
-                else
-                {
-                    continue;
                 }
             }
         }
         Move * finalpos = new Move(maxxpos, maxypos);
-        b.doMove(finalpos, s);
+        b->doMove(finalpos, s);
         return finalpos;
     }
     return nullptr;
