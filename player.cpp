@@ -23,6 +23,15 @@ Player::Player(Side side) {
             s = side;
             os = BLACK;
         }
+        
+        int weightarray[8][8] = {{20,-5,5,5,5,5,-5,20},
+                                 {-5,-5,2,2,2,2,-5,-5},
+                                 {5,2,2,2,2,2,2,5},
+                                 {5,2,2,2,2,2,2,5},
+                                 {5,2,2,2,2,2,2,5},
+                                 {5,2,2,2,2,2,2,5},
+                                 {-5,-5,2,2,2,2,-5,-5},
+                                 {20,-5,5,5,5,5,-5,20}};
     }
 }
 
@@ -50,16 +59,7 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
      * TODO: Implement how moves your AI should play here. You should first
      * process the opponent's opponents move before calculating your own move
      */
-    int weightarray[8][8] = {{4,1,3,3,3,3,1,4},
-                             {1,1,2,2,2,2,2,1},
-                             {3,2,2,2,2,2,2,3},
-                             {3,2,2,2,2,2,2,3},
-                             {3,2,2,2,2,2,2,3},
-                             {3,2,2,2,2,2,2,3},
-                             {1,1,2,2,2,2,1,1},
-                             {4,1,3,3,3,3,1,4}};
-    
-    vector<int> score;
+     
     if (msLeft == -1)
     {
         return nullptr;
@@ -75,8 +75,27 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
 			 }
 			 else
 			 {
+                 Move p;
 				 //need to do the valid move for ourside
 				 //and update the board accordingly
+                 int maxMoveVal = -1000;
+                 for (i=0;i<8;i++)
+                 {
+                     for (j=0; j<8;j++)
+                     {
+                         p->setX(i);
+                         p->setY(j);
+                         if (b.checkMove(p,s))
+                         {
+                             if (b.moveValue(p,s) > maxMoveVal)
+                             {
+                                 maxMoveVal = b.moveValue(p,s);
+                                 Move newp = p
+                             }
+                         }
+                     }
+                 }
+                 return newp;
 			 }
         }
         else
@@ -87,7 +106,7 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
 			}
 			else
 			{
-				
+				std::cerr<<"invalid opponent's move" << std::endl;
 			}
 		}
         return nullptr;

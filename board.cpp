@@ -67,6 +67,9 @@ bool Board::hasMoves(Side side) {
     return false;
 }
 
+int Board::moveValue(Move *m, Side side){
+    move
+}
 /*
  * Returns true if a move is legal for the given side; false otherwise.
  */
