@@ -59,7 +59,8 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
      * TODO: Implement how moves your AI should play here. You should first
      * process the opponent's opponents move before calculating your own move
      */
-     
+    
+    vector<int> scores;
     if (msLeft == -1)
     {
         return nullptr;
@@ -87,6 +88,7 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
                          p->setY(j);
                          if (b.checkMove(p,s))
                          {
+							 scores.push_back(b.moveValue(p, s));
                              if (b.moveValue(p,s) > maxMoveVal)
                              {
                                  maxMoveVal = b.moveValue(p,s);
