@@ -68,8 +68,8 @@ bool Board::hasMoves(Side side) {
 }
 
 int Board::score(Side s){
-	int ourscore;
-	int theirscore;
+	int ourscore = 0;
+	int theirscore = 0;
     int weightarray[8][8] = {{15,1,5,5,5,5,1,15},
                             {1,1,2,2,2,2,1,1},
                             {5,2,2,2,2,2,2,5},

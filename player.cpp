@@ -86,6 +86,12 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
     else
     {
         b->doMove(opponentsMove, os);
+        if (!(b->hasMoves(s)))
+        {
+            return nullptr;
+        }
+        else
+        {
         for (int i = 0; i < 8; i++)
         {
             for (int k = 0; k < 8; k++)
@@ -109,6 +115,7 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
         b->doMove(finalpos, s);
         return finalpos;
     }
+}
     return nullptr;
 }
 
