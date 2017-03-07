@@ -1,5 +1,5 @@
 #include "player.hpp"
-#inlcude <time.h>
+#include <time.h>
 
 /*
  * Constructor for the player; initialize everything here. The side your AI is
@@ -51,13 +51,13 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
      * process the opponent's opponents move before calculating your own move
      */
     int weightarray[8][8] = {{4,1,3,3,3,3,1,4},
-                            {1,1,2,2,2,2,2,1},
-                            {3,2,2,2,2,2,2,3},
-                            {3,2,2,2,2,2,2,3},
-                            {3,2,2,2,2,2,2,3},
-                            {3,2,2,2,2,2,2,3},
-                            {1,1,2,2,2,2,1,1},
-                            {4,1,3,3,3,3,1,4}}
+                             {1,1,2,2,2,2,2,1},
+                             {3,2,2,2,2,2,2,3},
+                             {3,2,2,2,2,2,2,3},
+                             {3,2,2,2,2,2,2,3},
+                             {3,2,2,2,2,2,2,3},
+                             {1,1,2,2,2,2,1,1},
+                             {4,1,3,3,3,3,1,4}};
     if (msLeft == -1)
     {
         return nullptr;
@@ -67,8 +67,27 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
     {
         if (opponentsMove == nullptr)
         {
-        
+             if (!b.hasMoves(s))
+             {
+				 return nullptr;
+			 }
+			 else
+			 {
+				 //need to do the valid move for ourside
+				 //and update the board accordingly
+			 }
         }
+        else
+        {
+			if (b.checkMove(opponentsMove, os))
+			{
+				b.doMove(opponentsMove, os);
+			}
+			else
+			{
+				
+			}
+		}
         return nullptr;
     }
     
@@ -109,20 +128,14 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
         b.doMove()
         */
          
-    if (b.countBlack()>b.countWhite)
+    if (b.countBlack()>b.countWhite())
     {
-        /*"Black wins"*/
+        /*"Black wins"*/      //I don't think this part is necessary
+                              //because we are only doing moves
     }
     else
     {
         /*"White wins"*/
     }
-    bool isDone();
-    bool hasMoves(Side side);
-    bool checkMove(Move *m, Side side);
-    void doMove(Move *m, Side side);
-    int count(Side side);
-    int countBlack();
-    int countWhite();
      
 }
