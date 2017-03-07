@@ -42,10 +42,6 @@ Player::~Player() {
  * return nullptr.
  */
 Move *Player::doMove(Move *opponentsMove, int msLeft) {
-    /*
-     * TODO: Implement how moves your AI should play here. You should first
-     * process the opponent's opponents move before calculating your own move
-     */
     Board *copy;
     Move *m = new Move(0, 0);
     int maxxpos;
@@ -59,29 +55,36 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
         }
         else
         {
-            for (int i = 0; i < 8; i++)
-            {
-                for (int k = 0; k < 8; k++)
-                {
-                    copy = b->copy();
-                    m->setX(i);
-                    m->setY(k);
-                    if(copy->checkMove(m, s))
-                    {
-                        copy->doMove(m, s);
-                        if(copy->score(s) > maxMoveVal)
-                        {
-                            maxMoveVal = copy->score(s);
-                            maxxpos = i;
-                            maxypos = k;
-                        }
-                    }
-                }
-            }
-            Move * finalpos = new Move(maxxpos, maxypos);
-            b->doMove(finalpos, s);
-            return finalpos;
-        }
+			if (testingMinimax == false)
+			{
+				for (int i = 0; i < 8; i++)
+				{
+					for (int k = 0; k < 8; k++)
+					{
+						copy = b->copy();
+						m->setX(i);
+						m->setY(k);
+						if(copy->checkMove(m, s))
+						{
+							copy->doMove(m, s);
+							if(copy->score(s) > maxMoveVal)
+							{
+								maxMoveVal = copy->score(s);
+								maxxpos = i;
+								maxypos = k;
+							}
+						}
+					}
+				}
+				Move * finalpos = new Move(maxxpos, maxypos);
+				b->doMove(finalpos, s);
+				return finalpos;
+			}
+			//for minimax
+			else
+			{
+			}
+		}
     }
     else
     {
@@ -92,30 +95,37 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
         }
         else
         {
-        for (int i = 0; i < 8; i++)
-        {
-            for (int k = 0; k < 8; k++)
-            {
-                copy = b->copy();
-                m->setX(i);
-                m->setY(k);
-                if(copy->checkMove(m, s))
-                {
-                    copy->doMove(m, s);
-                    if(copy->score(s) > maxMoveVal)
-                    {
-                        maxMoveVal = copy->score(s);
-                        maxxpos = i;
-                        maxypos = k;
-                    }
-                }
-            }
-        }
-        Move * finalpos = new Move(maxxpos, maxypos);
-        b->doMove(finalpos, s);
-        return finalpos;
-    }
-}
+			if (testingMinimax == false)
+			{
+				for (int i = 0; i < 8; i++)
+				{
+					for (int k = 0; k < 8; k++)
+					{
+						copy = b->copy();
+						m->setX(i);
+						m->setY(k);
+						if(copy->checkMove(m, s))
+						{
+							copy->doMove(m, s);
+							if(copy->score(s) > maxMoveVal)
+							{
+								maxMoveVal = copy->score(s);
+								maxxpos = i;
+								maxypos = k;
+							}
+						}
+					}
+				}
+				Move * finalpos = new Move(maxxpos, maxypos);
+				b->doMove(finalpos, s);
+				return finalpos;
+			} 
+			//for minimax
+			else
+			{
+			}
+		}
+	}
     return nullptr;
 }
 
