@@ -50,7 +50,14 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
      * TODO: Implement how moves your AI should play here. You should first
      * process the opponent's opponents move before calculating your own move
      */
-    weightarray = {{},{}}
+    int weightarray[8][8] = {{4,1,3,3,3,3,1,4},
+                            {1,1,2,2,2,2,2,1},
+                            {3,2,2,2,2,2,2,3},
+                            {3,2,2,2,2,2,2,3},
+                            {3,2,2,2,2,2,2,3},
+                            {3,2,2,2,2,2,2,3},
+                            {1,1,2,2,2,2,1,1},
+                            {4,1,3,3,3,3,1,4}}
     if (msLeft == -1)
     {
         return nullptr;
@@ -60,11 +67,42 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
     {
         if (opponentsMove == nullptr)
         {
-            
+        
         }
         return nullptr;
     }
-    /*if (b.hasMoves(s))
+    
+    /*check more heavily weighted positions first, then do move if valid,
+     * for example, if corner position is available, do move for corner position
+     */
+     
+    /*
+    for (i=0;i<8;i++)
+    {
+        for (j=0; j<8;j++)
+        {
+            Move e->setX(i);
+            Move e->setY(j);
+            for (weightarray[i][j] == 4)
+            {
+                checkMove(e,s);
+                doMove(e,s);
+            }
+                
+            }
+            for (weightarray[i][j]
+                e
+                
+                
+                
+                
+                b[i][j]
+                
+                int X = m->getX();
+                m->setX(
+    int Y = m->getY();
+                
+    if (b.hasMoves(s))
     {
         b.checkMove()
         
@@ -79,5 +117,12 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
     {
         /*"White wins"*/
     }
+    bool isDone();
+    bool hasMoves(Side side);
+    bool checkMove(Move *m, Side side);
+    void doMove(Move *m, Side side);
+    int count(Side side);
+    int countBlack();
+    int countWhite();
      
 }
