@@ -67,8 +67,29 @@ bool Board::hasMoves(Side side) {
     return false;
 }
 
-int Board::moveValue(Move *m, Side side){
-    move
+int Board::score(int array[][], Side s){
+	int ourscore;
+	int theirscore;
+    for (int i = 0; i < 8; i++)
+    {
+		for (int k = 0; k < 8; k++)
+		{
+			if(b.get(s, i, k) && b.occupied(i, k))
+			{
+				ourscore += array[i][k];
+			}
+			else if(b.occupied(i, k))
+			{
+				theirscore += array[i][k];
+			}
+			else
+			{
+				continue;
+			}
+		}
+	}
+	ourscore -= theirscore;
+	return ourscore;
 }
 /*
  * Returns true if a move is legal for the given side; false otherwise.

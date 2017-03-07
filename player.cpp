@@ -59,8 +59,11 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
      * TODO: Implement how moves your AI should play here. You should first
      * process the opponent's opponents move before calculating your own move
      */
-    
-    vector<int> scores;
+    Board copy;
+    Move *m;
+    int maxxpos;
+    int maxypos;
+    int maxMoveVal = -1000;
     if (msLeft == -1)
     {
         return nullptr;
@@ -76,28 +79,34 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
 			 }
 			 else
 			 {
-                 Move p;
-				 //need to do the valid move for ourside
-				 //and update the board accordingly
-                 int maxMoveVal = -1000;
-                 for (i=0;i<8;i++)
+                 for (int i = 0; i < 8; i++)
                  {
-                     for (j=0; j<8;j++)
-                     {
-                         p->setX(i);
-                         p->setY(j);
-                         if (b.checkMove(p,s))
-                         {
-							 scores.push_back(b.moveValue(p, s));
-                             if (b.moveValue(p,s) > maxMoveVal)
-                             {
-                                 maxMoveVal = b.moveValue(p,s);
-                                 Move newp = p
-                             }
-                         }
-                     }
-                 }
-                 return newp;
+					 for (int k = 0; k < 8; k++)
+					 {
+						 copy = b.copy();
+						 m->setX(i);
+						 m->setY(k);
+						 if(copy.checkMove(m, s))
+						 {
+							 copy.doMove(m, s);
+							 if(copy.score(weightarray, s) > maxMoveval)
+							 {
+								 maxMoveVal = copy.score(weightarray, s);
+								 maxxpos = i;
+								 maxypos = k;
+							 }
+							 else
+							 {
+								 continue;
+							 }
+						 }
+						 else
+						 {
+							 continue;
+						 }
+					 }
+				 }
+				  return Move(maxxpos, maxypos);
 			 }
         }
         else
@@ -105,6 +114,34 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
 			if (b.checkMove(opponentsMove, os))
 			{
 				b.doMove(opponentsMove, os);
+				for (int i = 0; i < 8; i++)
+                 {
+					 for (int k = 0; k < 8; k++)
+					 {
+						 copy = b.copy();
+						 m->setX(i);
+						 m->setY(k);
+						 if(copy.checkMove(m, s))
+						 {
+							 copy.doMove(m, s);
+							 if(copy.score(weightarray, s) > maxMoveval)
+							 {
+								 maxMoveVal = copy.score(weightarray, s);
+								 maxxpos = i;
+								 maxypos = k;
+							 }
+							 else
+							 {
+								 continue;
+							 }
+						 }
+						 else
+						 {
+							 continue;
+						 }
+					 }
+				 }
+				  return Move(maxxpos, maxypos);
 			}
 			else
 			{
