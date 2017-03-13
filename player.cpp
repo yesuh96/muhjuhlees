@@ -42,34 +42,47 @@ Player::~Player() {
  * The move returned must be legal; if there are no valid moves for your side,
  * return nullptr.
  */
- 
 
-/*
-function pvs(node, depth, α, β, color)
+Move *Player::pvs(node, depth, int α, int β, Side side)
+{
     if (node is a terminal node or depth = 0)
     {
-        return (color × the heuristic value of node)
+        return (color × the heuristic value of node);
     }
-    for (each child of node)
+    bool flag = 1;
+    for (int i = 0; i < 8; i++)
     {
-        if child is not first child
+        for (int k = 0; k < 8; k++)
         {
-            score := -pvs(child, depth-1, -α-1, -α, -color)
-            if (α < score < β)
+            copy = b->copy();
+            m->setX(i);
+            m->setY(k);
+            if(copy->checkMove(m, s))
             {
-                score := -pvs(child, depth-1, -β, -score, -color)
+                if (flag == 1)
+                { 
+                    score = -pvs(child, depth-1, -β, -α, -color);
+                    flag = 0;
+                }
+                else
+                {
+                    score = -pvs(child, depth-1, -α-1, -α, -color);
+                    if (α < score < β)
+                    {
+                        score = -pvs(child, depth-1, -β, -score, -color);
+                    }
+                }
+                α = max(α, score);
+                if (α ≥ β)
+                {
+                    break;
+                }
             }
-        else
-        {
-            score := -pvs(child, depth-1, -β, -α, -color)
         }
-        α := max(α, score)
-        if (α ≥ β)
-        {
-            break
-        }
-    return α
-    */
+    }
+    return α;
+}
+
 
 Move *Player::doMove(Move *opponentsMove, int msLeft) {
     Board *copy;
