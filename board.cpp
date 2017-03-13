@@ -69,17 +69,9 @@ bool Board::hasMoves(Side side) {
 
 int Board::score(Side s){
 	int ourscore = 0;
+    /*at the beggining, prioritize corner and edge pieces*/
     int weightarray1[8][8] = {{20,-15,10,10,10,10,-15,20},
                             {-15,-15,5,5,5,5,-15,-15},
-                            {10,5,5,5,5,5,5,10},
-                            {10,5,5,5,5,5,5,10},
-                            {10,5,5,5,5,5,5,10},
-                            {10,5,5,5,5,5,5,10},
-                            {-15,-15,5,5,5,5,-15,-15},
-                            {20,-15,10,10,10,10,-15,20}};
-    
-    int weightarray2[8][8] = {{1,1,1,1,1,1,1,1},
-                            {10,10,,5,5,5,-15,-15},
                             {10,5,5,5,5,5,5,10},
                             {10,5,5,5,5,5,5,10},
                             {10,5,5,5,5,5,5,10},
@@ -102,6 +94,35 @@ int Board::score(Side s){
 	}
 	return ourscore;
 }
+
+int Board::endscore(Side s){
+	int ourscore = 0;
+    /*at the end, just try to get as many pieces as possible*/
+    int weightarray2[8][8] = {{1,1,1,1,1,1,1,1},
+                              {1,1,1,1,1,1,1,1},
+                              {1,1,1,1,1,1,1,1},
+                              {1,1,1,1,1,1,1,1},
+                              {1,1,1,1,1,1,1,1},
+                              {1,1,1,1,1,1,1,1},
+                              {1,1,1,1,1,1,1,1},
+                              {1,1,1,1,1,1,1,1}};
+    for (int i = 0; i < 8; i++)
+    {
+		for (int k = 0; k < 8; k++)
+		{
+			if(this->get(s, i, k) && this->occupied(i, k))
+			{
+				ourscore += weightarray[i][k];
+			}
+			else if(this->occupied(i, k))
+			{
+				ourscore -= weightarray[i][k];
+			}
+		}
+	}
+	return ourscore;
+}
+
 /*
  * Returns true if a move is legal for the given side; false otherwise.
  */
