@@ -29,7 +29,7 @@ public:
     int countBlack();
     int countWhite();
     int score(Side s);
-
+    int endscore(Side s);
     void setBoard(char data[]);
 };
 

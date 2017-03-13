@@ -72,32 +72,20 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
                         maxMoveVal = 1000;
                         //do valid move
                         copy->doMove(m, s);
-                        for (int i2 = 0; i2 < 8; i2++)
-                        {
-							for (int k2 = 0; k2 < 8; k2++)
+						for (int subi = 0; subi < 8; subi++)
+						{
+							for (int subk = 0; subk < 8; subk++)
 							{
-								m->setX(i2);
-								m->setY(k2);
-								if (copy->checkMove(m, s))
+								m->setX(i);
+								m->setY(k);
+								if(copy->checkMove(m, s))
 								{
 									copy->doMove(m, s);
-									for (int subi = 0; subi < 8; subi++)
+									if(copy->score(s) < maxMoveVal)
 									{
-										for (int subk = 0; subk < 8; subk++)
-										{
-											m->setX(i);
-											m->setY(k);
-											if(copy->checkMove(m, s))
-											{
-												copy->doMove(m, s);
-												if(copy->score(s) < maxMoveVal)
-												{
-													maxMoveVal = copy->score(s);
-												}
-											}		
-										}
+										maxMoveVal = copy->score(s);
 									}
-								}
+								}		
 							}
 						}
                         scores.push_back(maxMoveVal);
@@ -147,32 +135,20 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
                         maxMoveVal = 1000;
                         //do valid move
                         copy->doMove(m, s);
-                        for (int i2 = 0; i2 < 8; i2++)
-                        {
-							for (int k2 = 0; k2 < 8; k2++)
+						for (int subi = 0; subi < 8; subi++)
+						{
+							for (int subk = 0; subk < 8; subk++)
 							{
-								m->setX(i2);
-								m->setY(k2);
-								if (copy->checkMove(m, s))
+								m->setX(i);
+								m->setY(k);
+								if(copy->checkMove(m, s))
 								{
 									copy->doMove(m, s);
-									for (int subi = 0; subi < 8; subi++)
+									if(copy->score(s) < maxMoveVal)
 									{
-										for (int subk = 0; subk < 8; subk++)
-										{
-											m->setX(i);
-											m->setY(k);
-											if(copy->checkMove(m, s))
-											{
-												copy->doMove(m, s);
-												if(copy->score(s) < maxMoveVal)
-												{
-													maxMoveVal = copy->score(s);
-												}
-											}		
-										}
+										maxMoveVal = copy->score(s);
 									}
-								}
+								}		
 							}
 						}
                         scores.push_back(maxMoveVal);

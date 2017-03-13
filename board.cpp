@@ -84,11 +84,11 @@ int Board::score(Side s){
 		{
 			if(this->get(s, i, k) && this->occupied(i, k))
 			{
-				ourscore += weightarray[i][k];
+				ourscore += weightarray1[i][k];
 			}
 			else if(this->occupied(i, k))
 			{
-				ourscore -= weightarray[i][k];
+				ourscore -= weightarray1[i][k];
 			}
 		}
 	}
@@ -112,11 +112,11 @@ int Board::endscore(Side s){
 		{
 			if(this->get(s, i, k) && this->occupied(i, k))
 			{
-				ourscore += weightarray[i][k];
+				ourscore += weightarray2[i][k];
 			}
 			else if(this->occupied(i, k))
 			{
-				ourscore -= weightarray[i][k];
+				ourscore -= weightarray2[i][k];
 			}
 		}
 	}
