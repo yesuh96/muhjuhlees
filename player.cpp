@@ -43,13 +43,15 @@ Player::~Player() {
  * return nullptr.
  */
 
-Move *Player::pvs(Move *m, int depth, int alpha, int beta, Side side)
+int *Player::pvs(Board *cc, Move *m, int depth, int alpha, int beta, Side s)
 {
-    if (depth == 0 || !(b->checkMove(m , s)))
+	int score;
+    if (depth == 0 || !(b->hasMoves(s)))
     {
-		return nullptr;
+		return b->score(s);
 	}
-    bool flag = 1;
+    int flag = 0;
+    // for each child
     for (int i = 0; i < 8; i++)
     {
         for (int k = 0; k < 8; k++)
@@ -59,28 +61,28 @@ Move *Player::pvs(Move *m, int depth, int alpha, int beta, Side side)
             m->setY(k);
             if(copy->checkMove(m, s))
             {
+				flag ++;
                 if (flag == 1)
                 { 
                     score = -pvs(child, depth-1, -beta, -alpha, -color);
-                    flag = 0;
                 }
                 else
                 {
                     score = -pvs(child, depth-1, -alpha-1, -alpha, -color);
-                    if (α < score < β)
+                    if (alpha < score && score < beta)
                     {
                         score = -pvs(child, depth-1, -beta, -score, -color);
                     }
                 }
-                α = max(α, score);
-                if (α ≥ β)
+                alpha = max(alpha, score);
+                if (alpha >= beta)
                 {
                     break;
                 }
             }
         }
     }
-    return α;
+    return alpha;
 }
 
 
