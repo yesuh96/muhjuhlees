@@ -43,12 +43,12 @@ Player::~Player() {
  * return nullptr.
  */
 
-Move *Player::pvs(node, depth, int α, int β, Side side)
+Move *Player::pvs(Move *m, int depth, int alpha, int beta, Side side)
 {
-    if (node is a terminal node or depth = 0)
+    if (depth == 0 || !(b->checkMove(m , s)))
     {
-        return (color × the heuristic value of node);
-    }
+		return nullptr;
+	}
     bool flag = 1;
     for (int i = 0; i < 8; i++)
     {
@@ -61,15 +61,15 @@ Move *Player::pvs(node, depth, int α, int β, Side side)
             {
                 if (flag == 1)
                 { 
-                    score = -pvs(child, depth-1, -β, -α, -color);
+                    score = -pvs(child, depth-1, -beta, -alpha, -color);
                     flag = 0;
                 }
                 else
                 {
-                    score = -pvs(child, depth-1, -α-1, -α, -color);
+                    score = -pvs(child, depth-1, -alpha-1, -alpha, -color);
                     if (α < score < β)
                     {
-                        score = -pvs(child, depth-1, -β, -score, -color);
+                        score = -pvs(child, depth-1, -beta, -score, -color);
                     }
                 }
                 α = max(α, score);
