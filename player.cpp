@@ -50,7 +50,7 @@ int *Player::pvs(Board *cc, Move *m, int depth, int alpha, int beta, Side s)
     {
 		return b->score(s);
 	}
-    int flag = 0;
+    int flag = 1;
     // for each child
     for (int i = 0; i < 8; i++)
     {
@@ -61,10 +61,10 @@ int *Player::pvs(Board *cc, Move *m, int depth, int alpha, int beta, Side s)
             m->setY(k);
             if(copy->checkMove(m, s))
             {
-				flag ++;
                 if (flag == 1)
                 { 
                     score = -pvs(child, depth-1, -beta, -alpha, -color);
+                    flag = 0;
                 }
                 else
                 {
