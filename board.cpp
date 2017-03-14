@@ -98,14 +98,14 @@ int Board::score(Side s){
 int Board::endscore(Side s){
 	int ourscore = 0;
     /*at the end, just try to get as many pieces as possible*/
-    int weightarray2[8][8] = {{10,1,1,1,1,1,1,10},
+    int weightarray2[8][8] = {{20,1,1,1,1,1,1,20},
                               {1,1,1,1,1,1,1,1},
                               {1,1,1,1,1,1,1,1},
                               {1,1,1,1,1,1,1,1},
                               {1,1,1,1,1,1,1,1},
                               {1,1,1,1,1,1,1,1},
                               {1,1,1,1,1,1,1,1},
-                              {10,1,1,1,1,1,1,10}};
+                              {20,1,1,1,1,1,1,20}};
     for (int i = 0; i < 8; i++)
     {
 		for (int k = 0; k < 8; k++)
