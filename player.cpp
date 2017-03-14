@@ -100,71 +100,87 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
         }
         else
         {
-            vector<int>scores;
-            vector<Move>moves;
-            for (int i = 0; i < 8; i++)
-            {
-                for (int k = 0; k < 8; k++)
-                {
-                    copy = b->copy();
-                    m->setX(i);
-                    m->setY(k);
-                    if(copy->checkMove(m, s))
-                    {
-                        maxMoveVal = 1000;
-                        //do valid move
-                        /*
-                        copy->doMove(m, s);
-                        for (int i2 = 0; i2 < 8; i2++)
-                        {
-							for (int k2 = 0; k2 < 8; k2++)
+			if (testingMinimax == false)
+			{
+				for (int i = 0; i < 8; i++)
+				{
+					for (int k = 0; k < 8; k++)
+					{
+						copy = b->copy();
+						m->setX(i);
+						m->setY(k);
+						if(copy->checkMove(m, s))
+						{
+							copy->doMove(m, s);
+							if(copy->score(s) > maxMoveVal)
 							{
-								m->setX(i2);
-								m->setY(k2);
-								if (copy->checkMove(m, s))
-								{ */
-									copy->doMove(m, s);
-                                    for (int subi = 0; subi < 8; subi++)
-                                    {
-                                        for (int subk = 0; subk < 8; subk++)
-                                        {
-                                            m->setX(i);
-                                            m->setY(k);
-                                            if(copy->checkMove(m, s))
-                                            {
-                                                copy->doMove(m, s);
-                                                if(copy->score(s) < maxMoveVal)
-                                                {
-                                                    maxMoveVal = copy->score(s);
-                                                }
-                                            /*}
-                                        }
-									}*/
-								}		
+								maxMoveVal = copy->score(s);
+								maxxpos = i;
+								maxypos = k;
 							}
 						}
-                        scores.push_back(maxMoveVal);
-                        moves.push_back(Move(i, k));
-                    }
-                }
-            }
-            int greatestminval;
-            int index;
-            for (unsigned int s = 0; s < scores.size() - 1; s++)
-            {
-                greatestminval = scores[0];
-                index = 0;
-                if (scores[s] > greatestminval)
-                {
-                    index = s;
-                    greatestminval = scores[s];
-                }
-            }
-            maxxpos = (moves[index]).getX();
-            maxypos = (moves[index]).getY();
-            Move * finalpos = new Move(maxxpos, maxypos);
-            b->doMove(finalpos, s);
-            return finalpos;
+					}
+				}
+				Move * finalpos = new Move(maxxpos, maxypos);
+				b->doMove(finalpos, s);
+				return finalpos;
+			}
+			//for minimax
+			else
+			{
+				vector<int>scores;
+				vector<Move>moves;
+				for (int i = 0; i < 8; i++)
+				{
+					for (int k = 0; k < 8; k++)
+					{
+						copy = b->copy();
+						m->setX(i);
+						m->setY(k);
+						if(copy->checkMove(m, s))
+						{
+							maxMoveVal = 1000;
+							//do valid move
+							copy->doMove(m, s);
+							for (int subi = 0; subi < 8; subi++)
+							{
+								for (int subk = 0; subk <8; subk++)
+								{
+									m->setX(i);
+									m->setY(k);
+									if(copy->checkMove(m, s))
+									{
+										copy->doMove(m, s);
+										if(copy->score(s) < maxMoveVal)
+										{
+											maxMoveVal = copy->score(s);
+										}
+									}
+								}
+							}
+							scores.push_back(maxMoveVal);
+							moves.push_back(Move(i, k));
+						}
+					}
+				}
+				int greatestminval;
+				int index;
+				for (unsigned int s = 0; s < scores.size() - 1; s++)
+				{
+					greatestminval = scores[0];
+					index = 0;
+					if (scores[s] > greatestminval)
+					{
+						index = s;
+						greatestminval = scores[s];
+					}
+				}
+				maxxpos = (moves[index]).getX();
+				maxypos = (moves[index]).getY();
+				Move * finalpos = new Move(maxxpos, maxypos);
+				b->doMove(finalpos, s);
+				return finalpos;
+			}
 		}
     }
     else
@@ -176,58 +192,87 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
         }
         else
         {
-            vector<int>scores;
-            vector<Move>moves;
-            for (int i = 0; i < 8; i++)
-            {
-                for (int k = 0; k < 8; k++)
-                {
-                    copy = b->copy();
-                    m->setX(i);
-                    m->setY(k);
-                    if(copy->checkMove(m, s))
-                    {
-                        maxMoveVal = 1000;
-                        //do valid move
-                        copy->doMove(m, s);
-						for (int subi = 0; subi < 8; subi++)
+			if (testingMinimax == false)
+			{
+				for (int i = 0; i < 8; i++)
+				{
+					for (int k = 0; k < 8; k++)
+					{
+						copy = b->copy();
+						m->setX(i);
+						m->setY(k);
+						if(copy->checkMove(m, s))
 						{
-							for (int subk = 0; subk < 8; subk++)
+							copy->doMove(m, s);
+							if(copy->score(s) > maxMoveVal)
 							{
-								m->setX(i);
-								m->setY(k);
-								if(copy->checkMove(m, s))
-								{
-									copy->doMove(m, s);
-									if(copy->score(s) < maxMoveVal)
-									{
-										maxMoveVal = copy->score(s);
-									}
-								}		
+								maxMoveVal = copy->score(s);
+								maxxpos = i;
+								maxypos = k;
 							}
 						}
-                        scores.push_back(maxMoveVal);
-                        moves.push_back(Move(i, k));
-                    }
-                }
-            }
-            int greatestminval;
-            int index;
-            for (unsigned int s = 0; s < scores.size() - 1; s++)
-            {
-                greatestminval = scores[0];
-                index = 0;
-                if (scores[s] > greatestminval)
-                {
-                    index = s;
-                    greatestminval = scores[s];
-                }
-            }
-            maxxpos = (moves[index]).getX();
-            maxypos = (moves[index]).getY();
-            Move * finalpos = new Move(maxxpos, maxypos);
-            b->doMove(finalpos, s);
-            return finalpos;
+					}
+				}
+				Move * finalpos = new Move(maxxpos, maxypos);
+				b->doMove(finalpos, s);
+				return finalpos;
+			} 
+			//for minimax
+			else
+			{
+				vector<int>scores;
+				vector<Move>moves;
+				for (int i = 0; i < 8; i++)
+				{
+					for (int k = 0; k < 8; k++)
+					{
+						copy = b->copy();
+						m->setX(i);
+						m->setY(k);
+						if(copy->checkMove(m, s))
+						{
+							maxMoveVal = 1000;
+							//do valid move
+							copy->doMove(m, s);
+							for (int subi = 0; subi < 8; subi++)
+							{
+								for (int subk = 0; subk <8; subk++)
+								{
+									m->setX(i);
+									m->setY(k);
+									if(copy->checkMove(m, s))
+									{
+										copy->doMove(m, s);
+										if(copy->score(s) < maxMoveVal)
+										{
+											maxMoveVal = copy->score(s);
+										}
+									}
+								}
+							}
+							scores.push_back(maxMoveVal);
+							moves.push_back(Move(i, k));
+						}
+					}
+				}
+				int greatestminval;
+				int index;
+				for (unsigned int s = 0; s < scores.size() - 1; s++)
+				{
+					greatestminval = scores[0];
+					index = 0;
+					if (scores[s] > greatestminval)
+					{
+						index = s;
+						greatestminval = scores[s];
+					}
+				}
+				maxxpos = (moves[index]).getX();
+				maxypos = (moves[index]).getY();
+				Move * finalpos = new Move(maxxpos, maxypos);
+				b->doMove(finalpos, s);
+				return finalpos;
+			}
 		}
 	}
     return nullptr;
