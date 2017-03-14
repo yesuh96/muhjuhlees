@@ -2,6 +2,7 @@
 #include <time.h>
 #include <vector>
 
+using namespace std;
 /*
  * Constructor for the player; initialize everything here. The side your AI is
  * on (BLACK or WHITE) is passed in as "side". The constructor must finish
@@ -43,10 +44,11 @@ Player::~Player() {
  * return nullptr.
  */
 
-int *Player::pvs(Board *cc, int depth, int alpha, int beta, Side s)
+int Player::pvs(Board *cc, int depth, int alpha, int beta, Side s)
 {
 	Move * m2;
 	int score;
+    Board *copy;
     if (depth == 0 || !(cc->hasMoves(s)))
     {
 		return cc->score(s);
@@ -94,6 +96,7 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
 	//Array of valid moves
 	Move * m;
 	vector<Move> moves;
+    Board *cc;
 	int depth = 4;
 	int alpha = -100000;
 	int beta = 100000;
@@ -113,13 +116,13 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
 				//if the chlid is valid
 				if (cc->checkMove(m, s))
 				{
-					moves.push_back(m);
+					moves.push_back(*m);
 				}
 			}
 		}
 
 		//for each of first chlid valid moves
-		for (int movecheck = 0; movecheck < moves.size(); movecheck++)
+		for (unsigned int movecheck = 0; movecheck < moves.size(); movecheck++)
 		{
 			int index = 0;
 			int fscore = -1000000;
@@ -321,5 +324,5 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
 	}
     return nullptr;
     */
-    
+    return nullptr;
 }

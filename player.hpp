@@ -11,7 +11,7 @@ class Player {
 public:
     Player(Side side);
     ~Player();
-
+    int pvs(Board *cc, int depth, int alpha, int beta, Side s);
     Move *doMove(Move *opponentsMove, int msLeft);
 
     // Flag to tell if the player is running within the test_minimax context
