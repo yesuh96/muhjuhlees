@@ -43,12 +43,13 @@ Player::~Player() {
  * return nullptr.
  */
 
-int *Player::pvs(Board *cc, Move *m, int depth, int alpha, int beta, Side s)
+int *Player::pvs(Board *cc, int depth, int alpha, int beta, Side s)
 {
+	Move * m2;
 	int score;
-    if (depth == 0 || !(b->hasMoves(s)))
+    if (depth == 0 || !(cc->hasMoves(s)))
     {
-		return b->score(s);
+		return cc->score(s);
 	}
     int flag = 1;
     // for each child
@@ -56,22 +57,23 @@ int *Player::pvs(Board *cc, Move *m, int depth, int alpha, int beta, Side s)
     {
         for (int k = 0; k < 8; k++)
         {
-            copy = b->copy();
-            m->setX(i);
-            m->setY(k);
-            if(copy->checkMove(m, s))
+            copy = cc->copy();
+            m2->setX(i);
+            m2->setY(k);
+            // for each valid child
+            if(copy->checkMove(m2, s))
             {
                 if (flag == 1)
                 { 
-                    score = -pvs(child, depth-1, -beta, -alpha, -color);
+                    score = -pvs(copy, depth-1, -beta, -alpha, os);
                     flag = 0;
                 }
                 else
                 {
-                    score = -pvs(child, depth-1, -alpha-1, -alpha, -color);
+                    score = -pvs(copy, depth-1, -alpha-1, -alpha, os);
                     if (alpha < score && score < beta)
                     {
-                        score = -pvs(child, depth-1, -beta, -score, -color);
+                        score = -pvs(copy, depth-1, -beta, -score, os);
                     }
                 }
                 alpha = max(alpha, score);
@@ -87,7 +89,49 @@ int *Player::pvs(Board *cc, Move *m, int depth, int alpha, int beta, Side s)
 
 
 Move *Player::doMove(Move *opponentsMove, int msLeft) {
-    Board *copy;
+	
+	//in doMove() function
+	//Array of valid moves
+	Move * m;
+	vector<Move> moves;
+	int depth = 4;
+	int alpha = -100000;
+	int beta = 100000;
+	if (depth == 0 || !(b->hasMoves(s)))
+	{
+		return nullptr;
+	}
+	else
+	{
+		for (int i = 0; i < 8; i++)
+		{
+			for (int k = 0; k < 8; k++)
+			{
+				cc = b->copy();
+				m->setX(i);
+				m->setY(k);
+				//if the chlid is valid
+				if (cc->checkMove(m, s))
+				{
+					moves.push_back(m);
+				}
+			}
+		}
+
+		//for each of first chlid valid moves
+		for (int movecheck = 0; movecheck < moves.size(); movecheck++)
+		{
+			int index = 0;
+			int fscore = -1000000;
+			if (pvs(moves[movecheck], depth, alpha, beta, s) > fscore)
+			{
+				fscore = pvs(copy, depth, alpha, beta, s);
+				index = movecheck;
+			}
+		}
+		return moves[index];
+	}
+    /*Board *copy;
     Move *m = new Move(0, 0);
     int maxxpos;
     int maxypos;
@@ -276,4 +320,6 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
 		}
 	}
     return nullptr;
+    */
+    
 }
