@@ -94,7 +94,7 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
 	
 	//in doMove() function
 	//Array of valid moves
-	Move * m;
+	Move * m = new Move(0, 0);
 	vector<Move*> moves;
     Board * cc;
 	int depth = 4;
@@ -102,86 +102,86 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
 	int beta = 100000;
 	if (opponentsMove == nullptr)
     {
-        if (!(b->hasMoves(s)))
-        {
-            return nullptr;
-        }
-        else
-        {
-			if (depth == 0 || !(b->hasMoves(s)))
+		if (depth == 0 || !(b->hasMoves(s)))
+		{
+			return nullptr;
+		}
+		else
+		{
+			for (int i = 0; i < 8; i++)
 			{
-				return nullptr;
-			}
-			else
-			{
-				for (int i = 0; i < 8; i++)
+				for (int k = 0; k < 8; k++)
 				{
-					for (int k = 0; k < 8; k++)
+					cc = b->copy();
+					m->setX(i);
+					m->setY(k);
+					//if the chlid is valid
+					if (cc->checkMove(m, s))
 					{
-						cc = b->copy();
-						m->setX(i);
-						m->setY(k);
-						//if the chlid is valid
-						if (cc->checkMove(m, s))
-						{
-							moves.push_back(m);
-						}
+						moves.push_back(m);
 					}
 				}
-				//for each of first chlid valid moves
-				int index = 0;
-				for (unsigned int movecheck = 0; 
-				movecheck < moves.size(); movecheck++)
-				{
-					int fscore = -1000000;
-					Board *copy3 = b->copy();
-					copy3->doMove(moves[movecheck], s);
-					int tempscore = pvs(copy3, depth, alpha, beta, s);
-					if (tempscore > fscore)
-					{
-						fscore = tempscore;
-						index = movecheck;
-					}
-				}
-				b->doMove(moves[index], s);
-				return moves[index];
 			}
+			//for each of first chlid valid moves
+			int index = 0;
+			for (unsigned int movecheck = 0; 
+			movecheck < moves.size(); movecheck++)
+			{
+				int fscore = -1000000;
+				Board *copy3 = b->copy();
+				copy3->doMove(moves[movecheck], s);
+				int tempscore = pvs(copy3, depth, alpha, beta, s);
+				if (tempscore > fscore)
+				{
+					fscore = tempscore;
+					index = movecheck;
+				}
+			}
+			b->doMove(moves[index], s);
+			return moves[index];
 		}
 	}
 	else
 	{
 		b->doMove(opponentsMove, os);
-		for (int i = 0; i < 8; i++)
+		if (depth == 0 || !(b->hasMoves(s)))
 		{
-			for (int k = 0; k < 8; k++)
+			return nullptr;
+		}
+		else
+		{
+			for (int i = 0; i < 8; i++)
 			{
-				cc = b->copy();
-				m->setX(i);
-				m->setY(k);
-				//if the chlid is valid
-				if (cc->checkMove(m, s))
+				for (int k = 0; k < 8; k++)
 				{
-					moves.push_back(m);
+					cc = b->copy();
+					m->setX(i);
+					m->setY(k);
+					//if the chlid is valid
+					if (cc->checkMove(m, s))
+					{
+						moves.push_back(m);
+					}
 				}
 			}
-		}
-		//for each of first chlid valid moves
-		int index = 0;
-		for (unsigned int movecheck = 0; 
-		movecheck < moves.size(); movecheck++)
-		{
-			int fscore = -1000000;
-			Board *copy3 = b->copy();
-			copy3->doMove(moves[movecheck], s);
-			int tempscore = pvs(copy3, depth, alpha, beta, s);
-			if (tempscore > fscore)
+			//for each of first chlid valid moves
+			int index = 0;
+			for (unsigned int movecheck = 0; 
+			movecheck < moves.size(); movecheck++)
 			{
-				fscore = tempscore;
-				index = movecheck;
+				int fscore = -1000000;
+				Board *copy3 = b->copy();
+				copy3->doMove(moves[movecheck], s);
+				int tempscore = pvs(copy3, depth, alpha, beta, s);
+				if (tempscore > fscore)
+				{
+					fscore = tempscore;
+					index = movecheck;
+				}
 			}
+			b->doMove(moves[index], s);
+			return moves[index];
 		}
-		b->doMove(moves[index], s);
-		return moves[index];
 	}
     /*Board *copy;
     Move *m = new Move(0, 0);
