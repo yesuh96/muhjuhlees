@@ -104,7 +104,7 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
 	//Array of valid moves
 	vector<Move*> moves;
     Board * cc;
-	int depth = 5;
+	int depth = 4;
 	int alpha = -100000;
 	int beta = 100000;
 	if (opponentsMove != nullptr)
@@ -136,11 +136,13 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
 		}
 		//for each of first chlid valid moves
 		int index = 0;
+        Board *copy3;
+        int fscore = -1000000;
 		for (unsigned int movecheck = 0; 
 		movecheck < moves.size(); movecheck++)
 		{
-			int fscore = -1000000;
-			Board *copy3 = b->copy();
+			
+			copy3 = b->copy();
 			copy3->doMove(moves[movecheck], s);
 			int tempscore = -pvs(copy3, depth, alpha, beta, os);
 			if (tempscore > fscore)

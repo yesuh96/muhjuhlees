@@ -2,15 +2,19 @@
  If you are solo, these points will be part of the next section.
 
 Renee figured out that we needed to copy the board in order to find a score of a hypothetical move and wrote a 
-function for it.  She wrote alot of doMove and also implemented minimax successfully.Hye Joon came up with the 
-idea of implementing a weight array and tested for the weight array that is most successful. She also contributed 
-with the constructor, doMove, debugging and brainstormed a way to make AI competitive. 
+function for it.  She wrote alot of doMove and also implemented minimax successfully. Renee finished up the 
+Negascout implementation that Hye Joon started. Hye Joon came up with the idea of implementing a weight array
+ and tested for the weight array that is most successful. She also contributed with the constructor, doMove, debugging and brainstormed a way to make AI competitive. In the second week, she 
+came up with the idea to implement negascout.
 
 We both went to the TA office hours together. I would say that we were a great team and we both contributed our 
 best efforts to making this AI. 
 
 2. Document the improvements that your group made to your AI to make it tournament-worthy.
  Explain why you think your strategy(s) will work. Feel free to discuss any ideas were tried but didn't work out.
+
+We tried to implement Negascout, which is a combination of minimax and alpha beta pruning. While it did compile,
+it did not work and we kept losing to constantplayer  and betterplayer. 
 
 We tried to make it such that the AI will at first go for the corner pieces, but as the game nears its end, the AI will 
 prioritize getting as many positions as possible. I realized the times that our player (muhjuhlees) lost to Simple
